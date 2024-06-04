@@ -1,5 +1,11 @@
 # 常见问题与报错
 
+**0.** 执行app.py报错 FileNotFoundError: [Errno 2] No such file or directory: '../ChatTTS-ui/models/pzc163/chatTTS/config/path.yaml
+
+答：模型不完整，重新下载模型或者 打开 https://www.modelscope.cn/models/pzc163/chatTTS/files 下载 path.yaml 、复制到报错里显示的文件夹内 ChatTTS-ui/models/pzc163/chatTTS/config/
+
+
+
 **1.**  MacOS 报错 `Initializing libomp.dylib, but found libiomp5.dylib already initialized`
 
 > 答：在app.py的 `import os` 的下一行，添加代码
@@ -69,7 +75,25 @@
 
 答：如果选中中英分词，那么将会把文字中的中文和英文分离出来单独合成，同时将对应的数字 转为相应语言的文字，比如 中文下123转为一二三，英文下123转为 one two three
 
-**12.** ChatTTS原始项目新版本有兼容问题，可能会报错 “报错 Normalizer pynini WeTextProcessing nemo_text_processing ”
+
+**12.** Runtime Error:cannot find a working triton installation 
+
+打开 .env  将 compile=true 改为 compile=false
+
+**13.** MacOS下无法安装 soundfile
+
+答：打开终端，执行 `brew install libsndfile` 然后再安装 soundfile
+
+
+**14.** 如何离线使用
+
+答：
+
+1. 使用源码部署
+2. 先运行一次，确保模型下载完毕
+3. 打开 app.py 大约35行， `CHATTTS_DIR = snapshot_download('pzc163/chatTTS',cache_dir=MODEL_DIR)` 改为 `CHATTTS_DIR = MODEL_DIR+"/pzc163/chatTTS"`
+
+**15.** ChatTTS原始项目新版本有兼容问题，可能会报错 “报错 Normalizer pynini WeTextProcessing nemo_text_processing ”
 
 解决方法：
 新版使用了 nemo_text_processing  和  pynini 来处理中文，但遗憾的是，pynini压根无法在windows平台安装和使用，要使用，也只能安装在WSL子系统上。
